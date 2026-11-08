@@ -1,12 +1,392 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>What Makes a VLA Reactive?
-A Study of Execution Strategies for Dynamic Manipulation
-</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Meta tags for search engines and social media previews -->
+  <meta name="description" content="What Makes a VLA Reactive? A study of execution strategies (prediction/execution horizons, synchronous vs. asynchronous inference, chunk continuity, motion cues and latent-space RL) for dynamic manipulation with pi0.5. CoRL 2026 Workshop.">
+  <meta property="og:title" content="What Makes a VLA Reactive? A Study of Execution Strategies for Dynamic Manipulation"/>
+  <meta property="og:description" content="Reactivity of a pretrained VLA depends on the execution pipeline as much as on the policy. CoRL 2026 Workshop."/>
+  <meta property="og:url" content="https://intuitive-robots.github.io/What-Makes-a-VLA-Reactive/"/>
+  <meta property="og:image" content="static/images/teaser.jpg"/>
+  <meta name="twitter:title" content="What Makes a VLA Reactive?">
+  <meta name="twitter:description" content="A Study of Execution Strategies for Dynamic Manipulation. CoRL 2026 Workshop.">
+  <meta name="twitter:image" content="static/images/teaser.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="keywords" content="Vision-Language-Action, VLA, action chunking, dynamic manipulation, asynchronous inference, real-time chunking, robot learning, CoRL">
+
+  <title>What Makes a VLA Reactive?</title>
+  <link rel="icon" type="image/svg+xml" href="static/images/favicon.svg">
+  <link rel="icon" type="image/png" href="static/images/favicon.png">
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+
+  <link rel="stylesheet" href="static/css/bulma.min.css">
+  <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="static/css/index.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="static/js/fontawesome.all.min.js"></script>
+  <script src="static/js/bulma-carousel.min.js"></script>
+  <script src="static/js/bulma-slider.min.js"></script>
+  <script src="static/js/index.js"></script>
 </head>
 <body>
-  <h1>My Research Paper</h1>
-  <p>Project website coming soon!</p>
+
+<!-- ===================== Title / authors / links ===================== -->
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">What Makes a VLA Reactive?</h1>
+          <h2 class="title is-3 publication-subtitle">A Study of Execution Strategies for Dynamic Manipulation</h2>
+
+          <div class="is-size-5 publication-authors">
+            <!-- To link an author, wrap the name in <a href="..." target="_blank">Name</a> -->
+            <span class="author-block">Zhuoyue Li<sup>1</sup>,</span>
+            <span class="author-block">Zhendong Han<sup>1</sup>,</span>
+            <span class="author-block">Pankhuri Vanjani<sup>1</sup>,</span>
+            <span class="author-block">Wenting Li<sup>1</sup>,</span>
+            <span class="author-block">Rudolf Lioutikov<sup>1,2</sup></span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup>1</sup>Intuitive Robots Lab (IRL), Karlsruhe Institute of Technology (KIT)</span>
+            <span class="author-block" style="margin-left: 0.75rem;"><sup>2</sup>Robotics Institute Germany (RIG)</span>
+          </div>
+
+          <div class="is-size-5 publication-venue-line">
+            <span class="publication-venue">CoRL 2026 Workshop &nbsp;&middot;&nbsp; Efficient Foundation Models for Real-Time Embodied AI</span>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- Paper PDF -->
+              <span class="link-block">
+                <a href="static/pdfs/paper.pdf" target="_blank"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="fas fa-file-pdf"></i></span>
+                  <span>Paper</span>
+                </a>
+              </span>
+
+              <!-- arXiv: replace <ARXIV ID> and remove "is-static" once available -->
+              <span class="link-block">
+                <a href="https://arxiv.org/abs/<ARXIV ID>" target="_blank"
+                   class="external-link button is-normal is-rounded is-dark is-static">
+                  <span class="icon"><i class="ai ai-arxiv"></i></span>
+                  <span>arXiv (coming soon)</span>
+                </a>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== Teaser ===================== -->
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+      <div class="columns is-variable is-2 teaser-videos">
+        <div class="column">
+          <video autoplay muted loop playsinline preload="auto">
+            <source src="static/videos/moving_cup.mp4" type="video/mp4">
+          </video>
+          <p class="video-caption">Moving-cup placement</p>
+        </div>
+        <div class="column">
+          <video autoplay muted loop playsinline preload="auto">
+            <source src="static/videos/rolling_can.mp4" type="video/mp4">
+          </video>
+          <p class="video-caption">Rolling-can grasping</p>
+        </div>
+        <div class="column">
+          <video autoplay muted loop playsinline preload="auto">
+            <source src="static/videos/conveyor.mp4" type="video/mp4">
+          </video>
+          <p class="video-caption">Conveyor-belt picking</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== Abstract ===================== -->
+<section class="section hero is-light">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified abstract-text">
+          <p>
+            Vision-language-action (VLA) models predict chunks of future actions, and when objects move,
+            those chunks go stale before they are executed. We study what makes a pretrained VLA reactive,
+            using &pi;<sub>0.5</sub> on two dynamic simulation benchmarks and three real-robot tasks. We vary
+            the prediction and execution horizons, compare synchronous and asynchronous inference, test
+            methods that deliver actions sooner or keep successive chunks continuous, and adapt the policy
+            with motion cues and latent-space reinforcement learning. The best prediction horizon is about
+            one second, and the best execution horizon depends on the checkpoint. Short horizons help more
+            with asynchronous execution, and methods that keep the trajectory continuous outperform those
+            that only reduce latency. Adapting the policy repairs targeted failures, but on the conveyor task
+            changing the execution horizon gained as much. Reactivity depends on the execution pipeline as
+            much as on the policy, so both should be evaluated together.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== Study design ===================== -->
+<section class="section hero">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">Study Design</h2>
+    <img src="static/images/teaser.jpg" class="figure-img"
+         alt="Overview: dynamic manipulation with a VLA, execution horizon, and policy-execution interaction"/>
+    <p class="figure-caption has-text-centered">
+      Dynamic VLA manipulation depends on the interaction between prediction and execution horizons,
+      inference scheduling, chunk continuity, and policy behavior, which together determine whether
+      frequent replanning improves task performance.
+    </p>
+    <div class="content has-text-justified">
+      <p>
+        Given an observation <i>o<sub>t</sub></i>, a language instruction, and the proprioceptive state,
+        the policy predicts an action chunk of length <i>H</i> (the <b>prediction horizon</b>), of which only the
+        first <i>s</i> &le; <i>H</i> actions are executed (the <b>execution horizon</b>). In
+        <b>synchronous</b> execution the robot waits while the next chunk is computed; <b>asynchronous</b>
+        execution overlaps inference with motion, but must account for inference delay and can introduce
+        discontinuities when switching between independently generated chunks.
+      </p>
+    </div>
+    <img src="static/images/sync_async.png" class="figure-img figure-img-small"
+         alt="Synchronous vs. asynchronous execution timelines"/>
+    <p class="figure-caption has-text-centered">
+      Synchronous execution introduces waiting periods, while asynchronous execution overlaps inference with
+      motion but may cause inter-chunk discontinuities.
+    </p>
+
+    <div class="content has-text-justified" style="margin-top: 2rem;">
+      <p>
+        All interventions are implemented within a common &pi;<sub>0.5</sub> framework and target complementary
+        limitations of dynamic manipulation: temporal commitment, delayed or discontinuous execution, and
+        insufficient motion information or behavioral adaptation.
+      </p>
+    </div>
+    <div class="table-container">
+      <table class="table is-fullwidth is-hoverable intervention-table">
+        <thead>
+          <tr>
+            <th>Method</th><th>Model</th><th>Inference</th><th>Execution</th><th>Action Rep.</th><th>Target</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>RTC</td><td></td><td>&#10003;</td><td></td><td></td><td>Chunk transition</td></tr>
+          <tr><td>FASTER</td><td></td><td>&#10003;</td><td>&#10003;</td><td></td><td>Action generation</td></tr>
+          <tr><td>DynamicVLA</td><td></td><td>&#10003;</td><td>&#10003;</td><td></td><td>Execution alignment</td></tr>
+          <tr><td>ABPolicy</td><td>&#10003;</td><td></td><td>&#10003;</td><td>&#10003;</td><td>Chunk continuity</td></tr>
+          <tr><td>PUMA</td><td>&#10003;</td><td></td><td></td><td></td><td>Motion information</td></tr>
+          <tr><td>AAC</td><td></td><td>&#10003;</td><td>&#10003;</td><td></td><td>Execution horizon</td></tr>
+          <tr><td>DSRL</td><td></td><td></td><td>&#10003;</td><td></td><td>Latent steering</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Method rollouts (tabs). Each tab button's data-target matches a .method-pane id. -->
+    <h3 class="title is-4 has-text-centered method-demos-title">Method Rollouts on the Conveyor Belt</h3>
+    <div class="tabs is-toggle is-centered method-tabs">
+      <ul>
+        <li class="is-active" data-target="pane-pi05"><a>&pi;<sub>0.5</sub></a></li>
+        <li data-target="pane-rtc"><a>RTC</a></li>
+        <li data-target="pane-faster"><a>FASTER</a></li>
+        <li data-target="pane-dynamicvla"><a>DynamicVLA</a></li>
+        <li data-target="pane-abpolicy"><a>ABPolicy</a></li>
+        <li data-target="pane-puma"><a>PUMA</a></li>
+        <li data-target="pane-aac"><a>AAC</a></li>
+        <li data-target="pane-dsrl"><a>DSRL</a></li>
+      </ul>
+    </div>
+
+    <div class="method-panes">
+      <div class="method-pane is-active" id="pane-pi05">
+        <video muted loop playsinline controls preload="metadata" src="static/videos/methods/pi05.mp4"></video>
+        <p class="video-caption">&pi;<sub>0.5</sub> (baseline)</p>
+      </div>
+      <div class="method-pane" id="pane-rtc">
+        <video muted loop playsinline controls preload="metadata" src="static/videos/conveyor.mp4"></video>
+        <p class="video-caption">RTC &middot; Chunk transition</p>
+      </div>
+      <div class="method-pane" id="pane-faster">
+        <div class="columns is-variable is-2">
+          <div class="column">
+            <video muted loop playsinline controls preload="metadata" src="static/videos/methods/faster_s5.mp4"></video>
+            <p class="video-caption">FASTER, <i>s</i> = 5</p>
+          </div>
+          <div class="column">
+            <video muted loop playsinline controls preload="metadata" src="static/videos/methods/faster_s40.mp4"></video>
+            <p class="video-caption">FASTER, <i>s</i> = 40</p>
+          </div>
+        </div>
+        <p class="video-caption">FASTER &middot; Action generation</p>
+      </div>
+      <div class="method-pane" id="pane-dynamicvla">
+        <video muted loop playsinline controls preload="metadata" src="static/videos/methods/dynamicvla.mp4"></video>
+        <p class="video-caption">DynamicVLA &middot; Execution alignment</p>
+      </div>
+      <div class="method-pane" id="pane-abpolicy">
+        <video muted loop playsinline controls preload="metadata" src="static/videos/methods/abpolicy.mp4"></video>
+        <p class="video-caption">ABPolicy &middot; Chunk continuity</p>
+      </div>
+      <div class="method-pane" id="pane-puma">
+        <video muted loop playsinline controls preload="metadata" src="static/videos/methods/puma.mp4"></video>
+        <p class="video-caption">PUMA &middot; Motion information</p>
+      </div>
+      <div class="method-pane" id="pane-aac">
+        <video class="video-small" muted loop playsinline controls preload="metadata" src="static/videos/methods/aac.mp4"></video>
+        <p class="video-caption">AAC &middot; Execution horizon</p>
+      </div>
+      <div class="method-pane" id="pane-dsrl">
+        <div class="columns is-variable is-2 is-centered portrait-pair">
+          <div class="column is-narrow">
+            <video muted loop playsinline controls preload="metadata" src="static/videos/methods/dsrl_before.mp4"></video>
+            <p class="video-caption">&pi;<sub>0.5</sub> &middot; failure</p>
+          </div>
+          <div class="column is-narrow">
+            <video muted loop playsinline controls preload="metadata" src="static/videos/methods/dsrl_after.mp4"></video>
+            <p class="video-caption">After DSRL training &middot; success</p>
+          </div>
+        </div>
+        <p class="video-caption">DSRL &middot; Latent steering</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== Results ===================== -->
+<section class="section hero is-light">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">Results</h2>
+
+    <!-- RQ1 -->
+    <h3 class="title is-4 rq-title">RQ1: How do prediction and execution horizons affect dynamic manipulation?</h3>
+    <img src="static/images/rq1.png" class="figure-img" alt="RQ1 results"/>
+    <p class="figure-caption">
+      (a) Success vs. prediction horizon in seconds on DOM and DOMINO; rings mark the best horizon.
+      (b) Conveyor-belt success of the 1k and 5k checkpoints across execution horizons.
+      (c) The 5k checkpoint with fixed horizons and AAC per belt condition (<i>H</i>=20, asynchronous, 45 trials each).
+    </p>
+    <div class="content">
+      <ul>
+        <li><b>A prediction horizon of about one second works best.</b> With longer chunks, the robot keeps executing
+            a plan made for an object that has since moved on.</li>
+        <li><b>The best execution horizon depends on the checkpoint.</b> The 1k checkpoint works best at <i>s</i>=5 and
+            the 5k checkpoint at <i>s</i>=15. The 5k policy barely moves during the first steps of each chunk, so
+            replanning sooner just re-predicts the same slow start.</li>
+        <li><b>Adaptive horizons do not help.</b> AAC never beats the best fixed horizon: its entropy trigger fires at
+            the wrong moments, and sampling many candidate chunks delays the next one.</li>
+      </ul>
+    </div>
+
+    <!-- RQ2 -->
+    <h3 class="title is-4 rq-title">RQ2: When does more frequent replanning actually help?</h3>
+    <img src="static/images/rq2.png" class="figure-img" alt="RQ2 results"/>
+    <p class="figure-caption">
+      (a) DOM dynamic task with the same policy (<i>H</i>=25) under synchronous and asynchronous execution.
+      (b) Conveyor-belt success of the best configuration of each method per belt condition and action rate (15 trials per bar).
+      (c) Conveyor-belt success of every method across execution horizons; synchronous methods above the rule.
+      ABPolicy (*) was evaluated only at <i>s</i>=9.
+    </p>
+    <div class="content">
+      <ul>
+        <li><b>Short horizons help more with asynchronous execution.</b> In synchronous execution, every extra chunk
+            adds a wait during which the robot stands still and the object moves on.</li>
+        <li><b>Continuity matters more than latency.</b> ABPolicy and RTC are the best methods on the conveyor although
+            FASTER has the lowest latency: a fresh action is only useful if the robot can follow it without a jump.</li>
+        <li><b>Higher action rate helps on the fast belt.</b> Going from 20 to 30&nbsp;Hz lifts ABPolicy from 13% to 93%
+            and FASTER from 0% to 33%.</li>
+      </ul>
+    </div>
+
+    <!-- RQ3 -->
+    <h3 class="title is-4 rq-title">RQ3: Can temporal information or reward-guided adaptation make the policy more reactive?</h3>
+    <img src="static/images/rq3.png" class="figure-img" alt="RQ3 results"/>
+    <p class="figure-caption">
+      (a) Best success of &pi;<sub>0.5</sub> and PUMA on each real-robot task.
+      (b) Success on the targeted condition before and after DSRL (DOM in percent; conveyor as success counts).
+      (c) Mean success over all nine conveyor conditions after DSRL; the dashed line is the 48.9% of the original checkpoints.
+    </p>
+    <div class="content">
+      <ul>
+        <li><b>Motion information gives mixed results.</b> PUMA helps on the conveyor but not on the rolling can, and its
+            motion cues only pay off with asynchronous execution.</li>
+        <li><b>Latent steering repairs targeted failures.</b> DSRL raises the targeted condition from 32% to 47% on DOM
+            and from 0% to 60% on the hardest conveyor case, without touching the VLA.</li>
+        <li><b>But the gains stay local.</b> DSRL lifts the 1k checkpoint to 64&ndash;69%, while the same checkpoint
+            reaches 71% at <i>s</i>=5 with no training at all.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== Videos (uncomment and add files to static/videos/) =====================
+<section class="hero is-small">
+  <div class="hero-body">
+    <div class="container">
+      <h2 class="title is-3 has-text-centered">Real-Robot Rollouts</h2>
+      <div id="video-carousel" class="carousel results-carousel">
+        <div class="item item-video1">
+          <video poster="" id="video1" autoplay controls muted loop playsinline height="100%">
+            <source src="static/videos/conveyor.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-video2">
+          <video poster="" id="video2" autoplay controls muted loop playsinline height="100%">
+            <source src="static/videos/rolling_can.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-video3">
+          <video poster="" id="video3" autoplay controls muted loop playsinline height="100%">
+            <source src="static/videos/moving_cup.mp4" type="video/mp4">
+          </video>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+===================== End videos ===================== -->
+
+<!-- ===================== BibTeX ===================== -->
+<section class="section hero" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <pre><code>@article{li2026reactive,
+  title  = {What Makes a VLA Reactive? A Study of Execution Strategies for Dynamic Manipulation},
+  author = {Li, Zhuoyue and Han, Zhendong and Vanjani, Pankhuri and Li, Wenting and Lioutikov, Rudolf}
+}</code></pre>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This page was built using the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank">Academic Project Page Template</a>
+            which was adopted from the <a href="https://nerfies.github.io" target="_blank">Nerfies</a> project page.
+            This website is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
 </body>
 </html>

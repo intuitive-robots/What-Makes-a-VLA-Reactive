@@ -1,0 +1,315 @@
+body {
+  font-family: 'Noto Sans', sans-serif;
+}
+
+
+.footer .icon-link {
+    font-size: 25px;
+    color: #000;
+}
+
+.link-block a {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.dnerf {
+  font-variant: small-caps;
+}
+
+
+.teaser .hero-body {
+  padding-top: 0;
+  padding-bottom: 3rem;
+}
+
+.teaser {
+  font-family: 'Google Sans', sans-serif;
+}
+
+
+.publication-title {
+}
+
+.publication-banner {
+  max-height: parent;
+
+}
+
+.publication-banner video {
+  position: relative;
+  left: auto;
+  top: auto;
+  transform: none;
+  object-fit: fit;
+}
+
+.publication-header .hero-body {
+}
+
+.publication-title {
+    font-family: 'Google Sans', sans-serif;
+}
+
+.publication-authors {
+    font-family: 'Google Sans', sans-serif;
+}
+
+.publication-venue {
+    color: #555;
+    width: fit-content;
+    font-weight: bold;
+}
+
+.publication-awards {
+    color: #ff3860;
+    width: fit-content;
+    font-weight: bolder;
+}
+
+.publication-authors {
+}
+
+.publication-authors a {
+   color: hsl(204, 86%, 53%) !important;
+}
+
+.publication-authors a:hover {
+    text-decoration: underline;
+}
+
+.author-block {
+  display: inline-block;
+}
+
+.publication-banner img {
+}
+
+.publication-authors {
+  /*color: #4286f4;*/
+}
+
+.publication-video {
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-bottom: 56.25%;
+
+    overflow: hidden;
+    border-radius: 10px !important;
+}
+
+.publication-video iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.publication-body img {
+}
+
+.results-carousel {
+  overflow: hidden;
+}
+
+.results-carousel .item {
+  margin: 5px;
+  overflow: hidden;
+  padding: 20px;
+  font-size: 0;
+}
+
+.results-carousel video {
+  margin: 0;
+}
+
+.slider-pagination .slider-page {
+  background: #000000;
+}
+
+.eql-cntrb { 
+  font-size: smaller;
+}
+
+
+
+
+
+/* ---------- Additions for "What Makes a VLA Reactive?" ---------- */
+.publication-subtitle {
+  font-family: 'Google Sans', sans-serif;
+  font-weight: 400;
+  color: #4a4a4a;
+  margin-top: -0.5rem !important;
+}
+
+.publication-venue-line {
+  margin-top: 0.75rem;
+}
+
+.publication-venue {
+  margin: 0 auto;
+  font-family: 'Google Sans', sans-serif;
+}
+
+.link-block .button.is-static {
+  opacity: 0.55;
+}
+
+.figure-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 0 auto;
+  border-radius: 6px;
+}
+
+.figure-caption {
+  font-size: 0.95rem;
+  color: #555;
+  margin-top: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+
+.teaser .figure-caption {
+  font-size: 1.05rem;
+}
+
+.intervention-table th,
+.intervention-table td {
+  text-align: center;
+}
+
+.intervention-table th:first-child,
+.intervention-table td:first-child,
+.intervention-table th:last-child,
+.intervention-table td:last-child {
+  text-align: left;
+}
+
+.rq-title {
+  margin-top: 2.5rem !important;
+  font-family: 'Google Sans', sans-serif;
+}
+
+.rq-title:first-of-type {
+  margin-top: 1rem !important;
+}
+
+/* Keep wide content (e.g. the intervention table) from stretching the page on phones */
+.hero > .container {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.table-container {
+  overflow-x: auto;
+}
+
+@media screen and (max-width: 768px) {
+  .intervention-table {
+    font-size: 0.8rem;
+  }
+  .intervention-table th,
+  .intervention-table td {
+    padding: 0.4em 0.5em;
+  }
+}
+
+/* Narrower page content */
+.container.is-max-desktop {
+  max-width: 940px !important;
+}
+
+/* Abstract text slightly larger */
+.abstract-text p {
+  font-size: 1.1rem;
+  line-height: 1.7;
+}
+
+/* Smaller sync/async timing figure */
+.figure-img-small {
+  max-width: 70%;
+}
+
+@media screen and (max-width: 768px) {
+  .figure-img-small {
+    max-width: 100%;
+  }
+}
+
+/* Teaser videos */
+.teaser-videos video {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 6px;
+}
+
+.video-caption {
+  text-align: center;
+  font-family: 'Google Sans', sans-serif;
+  font-size: 1rem;
+  color: #4a4a4a;
+  margin-top: 0.5rem;
+}
+
+/* Larger teaser videos: the teaser row may extend beyond the text width */
+.teaser .container.is-max-desktop {
+  max-width: 1200px !important;
+}
+
+/* Method rollout tabs */
+.method-demos-title {
+  margin-top: 3rem !important;
+}
+
+.method-tabs {
+  margin-bottom: 1rem !important;
+}
+
+.method-tabs li a {
+  font-family: 'Google Sans', sans-serif;
+}
+
+.method-pane {
+  display: none;
+}
+
+.method-pane.is-active {
+  display: block;
+}
+
+.method-pane video {
+  display: block;
+  width: 100%;
+  max-width: 720px;
+  height: auto;
+  margin: 0 auto;
+  border-radius: 6px;
+  background: #000;
+}
+
+.method-pane .columns video {
+  max-width: 100%;
+}
+
+/* Portrait video pair (DSRL before/after) */
+.method-pane .portrait-pair video {
+  width: 300px;
+  max-width: 100%;
+}
+
+@media screen and (max-width: 768px) {
+  .method-pane .portrait-pair video {
+    width: 100%;
+  }
+}
+
+/* AAC clip: portrait, cropped below the bowl; sized to match the DSRL videos' height */
+.method-pane video.video-small {
+  width: 280px;
+  max-width: 100%;
+}
