@@ -199,7 +199,7 @@
     </div>
 
     <!-- Method rollouts (tabs). Each tab button's data-target matches a .method-pane id. -->
-    <h3 class="title is-4 has-text-centered method-demos-title">Method Rollouts on the Conveyor Belt</h3>
+    <h3 class="title is-4 has-text-centered method-demos-title">Method Rollouts</h3>
     <div class="tabs is-toggle is-centered method-tabs">
       <ul>
         <li class="is-active" data-target="pane-pi05"><a>&pi;<sub>0.5</sub></a></li>
@@ -215,11 +215,21 @@
 
     <div class="method-panes">
       <div class="method-pane is-active" id="pane-pi05">
-        <video muted loop playsinline controls preload="metadata" src="static/videos/methods/pi05.mp4"></video>
+        <video class="video-wide" muted loop playsinline controls preload="metadata" src="static/videos/methods/pi05_horizon_s5_s15.mp4"></video>
+        <p class="video-caption">Conveyor belt, 5k checkpoint &middot; execution horizon <i>s</i> = 5 vs. <i>s</i> = 15</p>
         <p class="video-caption">&pi;<sub>0.5</sub> (baseline)</p>
       </div>
       <div class="method-pane" id="pane-rtc">
-        <video muted loop playsinline controls preload="metadata" src="static/videos/conveyor.mp4"></video>
+        <div class="columns is-variable is-2">
+          <div class="column">
+            <video muted loop playsinline controls preload="metadata" src="static/videos/methods/rtc_conveyor.mp4"></video>
+            <p class="video-caption">Conveyor belt, <i>s</i> = 10</p>
+          </div>
+          <div class="column">
+            <video muted loop playsinline controls preload="metadata" src="static/videos/methods/rtc_can.mp4"></video>
+            <p class="video-caption">Rolling can (fast), <i>s</i> = 10</p>
+          </div>
+        </div>
         <p class="video-caption">RTC &middot; Chunk transition</p>
       </div>
       <div class="method-pane" id="pane-faster">
@@ -240,25 +250,36 @@
         <p class="video-caption">DynamicVLA &middot; Execution alignment</p>
       </div>
       <div class="method-pane" id="pane-abpolicy">
-        <video muted loop playsinline controls preload="metadata" src="static/videos/methods/abpolicy.mp4"></video>
+        <video class="video-wide" muted loop playsinline controls preload="metadata" src="static/videos/methods/abpolicy_20_30hz.mp4"></video>
+        <p class="video-caption">Conveyor belt &middot; 20 Hz vs. 30 Hz control</p>
         <p class="video-caption">ABPolicy &middot; Chunk continuity</p>
       </div>
       <div class="method-pane" id="pane-puma">
-        <video muted loop playsinline controls preload="metadata" src="static/videos/methods/puma.mp4"></video>
+        <div class="columns is-variable is-2">
+          <div class="column">
+            <video muted loop playsinline controls preload="metadata" src="static/videos/methods/puma_belt.mp4"></video>
+            <p class="video-caption">Conveyor belt &middot; success</p>
+          </div>
+          <div class="column">
+            <video muted loop playsinline controls preload="metadata" src="static/videos/methods/puma_cup.mp4"></video>
+            <p class="video-caption">Moving cup, <i>s</i> = 35</p>
+          </div>
+        </div>
         <p class="video-caption">PUMA &middot; Motion information</p>
       </div>
       <div class="method-pane" id="pane-aac">
-        <video class="video-small" muted loop playsinline controls preload="metadata" src="static/videos/methods/aac.mp4"></video>
+        <video muted loop playsinline controls preload="metadata" src="static/videos/methods/aac_high_latency.mp4"></video>
+        <p class="video-caption">Conveyor belt &middot; high inference latency</p>
         <p class="video-caption">AAC &middot; Execution horizon</p>
       </div>
       <div class="method-pane" id="pane-dsrl">
-        <div class="columns is-variable is-2 is-centered portrait-pair">
-          <div class="column is-narrow">
-            <video muted loop playsinline controls preload="metadata" src="static/videos/methods/dsrl_before.mp4"></video>
-            <p class="video-caption">&pi;<sub>0.5</sub> &middot; failure</p>
+        <div class="columns is-variable is-2">
+          <div class="column">
+            <video muted loop playsinline controls preload="metadata" src="static/videos/methods/dsrl_before_fl.mp4"></video>
+            <p class="video-caption">&pi;<sub>0.5</sub> (5k, <i>s</i> = 10) &middot; failure</p>
           </div>
-          <div class="column is-narrow">
-            <video muted loop playsinline controls preload="metadata" src="static/videos/methods/dsrl_after.mp4"></video>
+          <div class="column">
+            <video muted loop playsinline controls preload="metadata" src="static/videos/methods/dsrl_after_fl.mp4"></video>
             <p class="video-caption">After DSRL training &middot; success</p>
           </div>
         </div>

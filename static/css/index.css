@@ -282,36 +282,26 @@ body {
   display: block;
 }
 
+/* Every 16:9 camera view shows at the same size: one half-width column (~470px, ~264px tall).
+   A lone clip is capped at that width so it matches the clips shown in pairs. */
 .method-pane video {
   display: block;
   width: 100%;
-  max-width: 720px;
+  max-width: 470px;
   height: auto;
   margin: 0 auto;
   border-radius: 6px;
   background: #000;
 }
 
-.method-pane .columns video {
-  max-width: 100%;
+/* Side-by-side comparison clips (two ~square views baked into one ~2:1 video):
+   width chosen so the height matches a single 16:9 clip (~264px). */
+.method-pane video.video-wide {
+  max-width: 540px;
 }
 
-/* Portrait video pair (DSRL before/after) */
-.method-pane .portrait-pair video {
-  width: 300px;
-  max-width: 100%;
-}
-
-@media screen and (max-width: 768px) {
-  .method-pane .portrait-pair video {
-    width: 100%;
-  }
-}
-
-/* AAC clip: portrait, cropped below the bowl; sized to match the DSRL videos' height */
-.method-pane video.video-small {
-  width: 280px;
-  max-width: 100%;
+.method-pane .pane-row {
+  margin-top: 1rem;
 }
 
 /* "Spotlight" highlight, inline after the workshop name */
